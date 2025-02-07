@@ -16,6 +16,6 @@ This software is furnished under a license and may be used and copied only in ac
 # 24ad.info
 
 Test automatycznego deploymentu
-- Data: 2025-02-07 23:47
-- Status: Test działania webhooka
+- Data: 2025-02-07 23:49
+- Status: Test po zmianie uprawnień (755)
 - Aktualizacja: Konfiguracja zgodna z Breathtime
