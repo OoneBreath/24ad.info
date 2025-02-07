@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Stripe Documentation</title>
+	<style>
+		body {
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			background-color: #f0f0f0;
+		}
+		
+		hr {
+			border-top: 1px solid #8c8b8b;
+		}
+		
+		#content {
+			background-color: #ffffff;
+			margin-left: auto;
+			margin-right: auto;
+			width: 900px;
+			padding: 20px;
+		}
+		
+		pre {
+			font-family: "Courier 10 Pitch", Courier, monospace;
+			font-size: 14px;
+			line-height: 140%;
+			white-space: pre;
+			white-space: pre-wrap;
+			white-space: -moz-pre-wrap;
+			white-space: -o-pre-wrap;
+		}
+		
+		code {
+			font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+			font-size: 90%;
+			color: #f4645f;
+			background-color: #f0f2f1;
+			text-shadow: 0 1px #fff;
+			padding: 2px 4px;
+			border-radius: 4px;
+		}
+		
+		li {
+			line-height: 140%;
+		}
+	</style>
+</head>
+
+<body>
+<div id="content">
+	<h2>DOCUMENTATION</h2>
+	<hr>
+	<br>
+	Stripe (v3.2.1) plugin for <a href="https://1.envato.market/30rEB" target="_blank">LaraClassifier</a> and <a
+		href="https://1.envato.market/Ld3mZ" target="_blank">JobClass</a>.
+	
+	<h3>Installation</h3>
+	To install this plugin:
+	
+	<ul>
+		<li>Copy the plugin's (uncompressed) folder into the script's plugins folder like this: <code>/extras/plugins/stripe/</code></li>
+		<li>Go to your Admin panel &rarr; Plugins (and click on "Install") to install it.</li>
+	</ul>
+	
+	<h3>Compatibility</h3>
+	<ul>
+		<li>v3.2.1 => LaraClassifier v16.0.0+ and JobClass v15.0.0+</li>
+		<li>v3.2.0 => LaraClassifier (v15.1.1 to v15.4.1) and JobClass (v14.1.1 v14.4.1)</li>
+		<li>v3.1.4 => LaraClassifier (v15.1.1 to v15.1.6) and JobClass (v14.1.1 to v14.1.6)</li>
+		<li>v3.1.3 => LaraClassifier v15.1.1 and JobClass v14.1.1</li>
+		<li>v3.1.2 => LaraClassifier v15.1.1 and JobClass v14.1.1</li>
+		<li>v3.1.1 => LaraClassifier v15.1.0 and JobClass v14.1.0</li>
+		<li>v3.1.0 => LaraClassifier v15.0.0 and JobClass v14.0.0</li>
+		<li>v3.0.1 => LaraClassifier v14.2.0 and JobClass v13.2.0</li>
+		<li>v3.0.0 => LaraClassifier (v14.0.0 to v14.1.0) and JobClass (v13.0.0 to v13.1.0)</li>
+		<li>v2.7 => LaraClassifier (v11.0.0 to v13.0.0) and JobClass (v10.0.0 to v12.0.0)</li>
+		<li>v2.6 => LaraClassifier v10.2.0+ and JobClass v9.2.0+</li>
+		<li>v2.5 => LaraClassifier v10.2.0 and JobClass v9.2.0</li>
+		<li>v2.4 => LaraClassifier (v10.0.1 to v10.1.4) and JobClass (v9.0.1 to v9.1.5)</li>
+		<li>v2.3 => LaraClassifier v10.0.1 and JobClass v9.0.1</li>
+		<li>v2.2 => LaraClassifier v10.0.1 and JobClass v9.0.1</li>
+		<li>v2.1 => LaraClassifier v10.0.0 and JobClass v9.0.0</li>
+		<li>v2.0 => LaraClassifier (v9.0.0 to v9.0.1) and JobClass (v8.0.0 to v8.0.1)</li>
+		<li>v1.9 => LaraClassifier (v8.0.2 to v8.0.6) and JobClass (v7.0.2 to v7.0.6)</li>
+		<li>v1.8 => LaraClassifier (v7.1.0 to v8.0.1) and JobClass (v5.9.0 to v7.0.1)</li>
+		<li>v1.7 => LaraClassifier (v6.6 to v7.0.4) and JobClass (v5.4 to v5.8.4)</li>
+		<li>v1.6 => LaraClassifier (v5.7 to v6.5) and JobClass (v4.5 to v5.3)</li>
+		<li>v1.5 => LaraClassifier (v5.2 to v5.6) and JobClass (v4.0 to v4.4)</li>
+		<li>v1.4 => LaraClassifier v5.1 and JobClass v3.9</li>
+		<li>v1.3 => LaraClassifier (v4.9 to v5.0) and JobClass (v3.7 to v3.8)</li>
+		<li>v1.1 to v1.2 => LaraClassifier (v3.1 to v4.8) and JobClass (v2.0 to v3.6)</li>
+		<li>v1.0 => LaraClassifier v3.0 and JobClass v1.9</li>
+	</ul>
+	
+	<h3>Update</h3>
+	Replace all the plugin's files on your server.
+	
+	<h3>Configuration</h3>
+	Add the settings below in the script's <code>/.env</code> file on your server:
+	
+	<pre>
+STRIPE_KEY=
+STRIPE_SECRET=
+    </pre>
+	
+	Example of use:
+	
+	<pre>
+STRIPE_KEY=your-stripe-key
+STRIPE_SECRET=your-stripe-secret
+    </pre>
+	
+	<p>NOTE:</p>
+	<ul>
+		<li>Integration modes supported: <code>checkout</code> and <code>payment_intent</code>.</li>
+		<li>To select an integration mode you have to use the variable <code>STRIPE_INTEGRATION=</code> in the <code>/.env</code> file like this: <code>STRIPE_INTEGRATION=payment_intent</code>.</li>
+		<li>Without adding the <code>STRIPE_INTEGRATION=</code> variable in the <code>/.env</code>, the default integration is <code>checkout</code>.</li>
+		<li>In order to use <code>checkout</code> integration,
+			you must set an account or business name at <a href="https://dashboard.stripe.com/account" target="_blank">https://dashboard.stripe.com/account</a>.</li>
+		<li>In order to use <code>payment_intent</code>, you must comply the PCI requirements: <a href="https://stripe.com/docs/security#pci-dss-guidelines" target="_blank">https://stripe.com/docs/security#pci-dss-guidelines</a>.</li>
+	</ul>
+	
+	<h3>Translation</h3>
+	To translate this plugin into your language:
+	
+	<ul>
+		<li>Go to the languages folder at <code>/extras/plugins/stripe/lang/</code></li>
+		<li>Duplicate the folder <code>/extras/plugins/stripe/lang/en/</code> to <code>/extras/plugins/stripe/lang/&lt;code&gt;/</code>
+			<br>NOTE: Don't forget replace <code>&lt;code&gt;</code> by your language code (e.g. "de" for German language).
+		</li>
+		<li>Open the file <code>/extras/plugins/stripe/lang/&lt;code&gt;/messages.php</code> and translate it.
+			<br>NOTE: To translate the file, you must change the values and not the keys of PHP array.
+		</li>
+	</ul>
+	
+	<h3>Uninstallation</h3>
+	To uninstall this plugin, go to your Admin panel &rarr; Plugins (and click on "Uninstall") to uninstall it.
+	
+	<h3>Removing</h3>
+	To remove this plugin:
+	
+	<ul>
+		<li>Uninstall it</li>
+		<li>Go in the folder <code>/extras/plugins/</code> and remove the folder <code>stripe/</code>.</li>
+	</ul>
+
+	<h3>Resources</h3>
+	<ul>
+		<li><a href="https://stripe.com/docs/checkout/quickstart" target="_blank">Stripe - Checkout: QuickStart</a></li>
+		<li><a href="https://github.com/stripe-samples/accept-a-payment" target="_blank">Stripe - Checkout: Samples</a></li>
+		<li><a href="https://stripe.com/docs/api/customers/create" target="_blank">Stripe - Checkout/Payment Intent: Create a Customer</a></li>
+		<li><a href="https://stripe.com/docs/payments/accept-a-payment?integration=checkout" target="_blank">Stripe - Checkout/Payment Intent: Create a Payment</a></li>
+		<li><a href="https://stripe.com/docs/api/payment_methods/create" target="_blank">Stripe - Payment Intent: Create a PaymentMethod</a></li>
+		<li><a href="https://stripe.com/docs/api/payment_intents/create" target="_blank">Stripe - Payment Intent: Create a PaymentIntent</a></li>
+		<li><a href="https://stripe.com/docs/payments/3d-secure" target="_blank">Stripe - Payment Intent: Card authentication and 3D Secure</a></li>
+		<li><a href="https://stripe.com/docs/testing" target="_blank">Stripe - Test the integration</a></li>
+	</ul>
+</div>
+</body>
+
+</html>

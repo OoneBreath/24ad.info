@@ -1,0 +1,10 @@
+{
+    "name": "stripe",
+    "version": "3.2.1",
+    "display_name": "Stripe",
+    "description": "Payment with Stripe",
+    "author": "Bedigit",
+    "category": "payment",
+    "has_installer": true,
+    "item_id": "19700721"
+}
