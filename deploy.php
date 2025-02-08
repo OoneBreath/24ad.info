@@ -1,4 +1,18 @@
 <?php
+// Włącz pełne raportowanie błędów
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Debug - zapisz wszystkie informacje o żądaniu
+$debug_info = [
+    'time' => date('Y-m-d H:i:s'),
+    'server' => $_SERVER,
+    'headers' => getallheaders(),
+    'raw_post' => file_get_contents('php://input')
+];
+file_put_contents('debug.txt', print_r($debug_info, true) . "\n---\n", FILE_APPEND);
+
+// Sekret do weryfikacji żądań
 $secret = "680d160ce88e53c3ff9747b8878cfccf5b89d6cf6401683d8b06fe0789f37590"; // Wygenerowany bezpieczny sekret
 
 // Pobierz nagłówek z podpisem od GitHuba
