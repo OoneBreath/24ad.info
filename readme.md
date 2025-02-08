@@ -16,6 +16,6 @@ This software is furnished under a license and may be used and copied only in ac
 # 24ad.info
 
 Test automatycznego deploymentu
-- Data: 2025-02-08 01:07
-- Status: Test po dodaniu deploy.php do /public
-- Aktualizacja: Nowa wersja skryptu deploy
+- Data: 2025-02-08 01:12
+- Status: Test po synchronizacji branchy (master -> main)
+- Aktualizacja: Poprawka nazw branchy na serwerze
