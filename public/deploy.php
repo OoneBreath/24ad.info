@@ -3,16 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Debug - zapisz podstawowe informacje o żądaniu
-$debug_info = [
-    'time' => date('Y-m-d H:i:s'),
-    'server' => $_SERVER,
-    'post_data' => file_get_contents('php://input')
-];
-file_put_contents('../debug.txt', print_r($debug_info, true) . "\n---\n", FILE_APPEND);
-
 // Sekret do weryfikacji żądań
 $secret = "680d160ce88e53c3ff9747b8878cfccf5b89d6cf6401683d8b06fe0789f37590";
+
+// Debug - zapisz informacje o żądaniu
+file_put_contents('../debug.txt', date('Y-m-d H:i:s') . "\n" . print_r($_SERVER, true) . "\n---\n", FILE_APPEND);
 
 // Sprawdź czy żądanie pochodzi z GitHuba
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -39,69 +34,10 @@ if (!hash_equals($hash, $calculated_hash)) {
     die('Nieprawidłowy podpis.');
 }
 
-// Katalog z repozytorium
-$repo_path = dirname(__DIR__);
+// Wykonaj git pull
+$output = [];
+exec('cd ' . escapeshellarg(dirname(__DIR__)) . ' && git pull origin main 2>&1', $output);
+file_put_contents('../deploy_log.txt', date('Y-m-d H:i:s') . "\n" . implode("\n", $output) . "\n---\n", FILE_APPEND);
 
-// Lista plików, których nie chcemy aktualizować
-$protected_files = [
-    '.env',
-    'includes/config.php',
-    '.htaccess',
-    'counter.txt',
-    'deploy.php',
-    'debug.txt'
-];
-
-// Zapisz logi
-$log_file = '../deploy_log.txt';
-function write_log($message) {
-    global $log_file;
-    $date = date('Y-m-d H:i:s');
-    file_put_contents($log_file, "[$date] $message\n", FILE_APPEND);
-}
-
-try {
-    // Zrób backup chronionych plików
-    foreach ($protected_files as $file) {
-        if (file_exists($file)) {
-            copy($file, $file . '.backup');
-            write_log("Utworzono backup pliku: $file");
-        }
-    }
-
-    // Pobierz zmiany z GitHuba
-    $output = [];
-    exec('cd ' . escapeshellarg($repo_path) . ' && git fetch origin && git reset --hard origin/master 2>&1', $output);
-    write_log('Git output: ' . implode("\n", $output));
-    
-    // Przywróć chronione pliki
-    foreach ($protected_files as $file) {
-        if (file_exists($file . '.backup')) {
-            rename($file . '.backup', $file);
-            write_log("Przywrócono plik: $file");
-        }
-    }
-    
-    // Wyczyść cache
-    if (function_exists('opcache_reset')) {
-        opcache_reset();
-        write_log('Wyczyszczono cache OPcache');
-    }
-    
-    write_log('Deployment zakończony sukcesem!');
-    echo 'Deployment zakończony sukcesem!';
-    
-} catch (Exception $e) {
-    write_log('Błąd: ' . $e->getMessage());
-    
-    // Przywróć backup w przypadku błędu
-    foreach ($protected_files as $file) {
-        if (file_exists($file . '.backup')) {
-            rename($file . '.backup', $file);
-            write_log("Przywrócono backup pliku: $file");
-        }
-    }
-    
-    http_response_code(500);
-    echo 'Wystąpił błąd podczas deploymentu.';
-}
+echo "Deployment zakończony!\n";
+echo implode("\n", $output);
