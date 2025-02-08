@@ -16,6 +16,6 @@ This software is furnished under a license and may be used and copied only in ac
 # 24ad.info
 
 Test automatycznego deploymentu
-- Data: 2025-02-07 23:58
-- Status: Test po naprawie branchy (main -> master)
-- Aktualizacja: Poprawka konfliktów na serwerze
+- Data: 2025-02-08 00:04
+- Status: Test z pełnym debugowaniem
+- Debug: Zapisywanie wszystkich informacji do debug.txt
