@@ -3,12 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Debug - zapisz wszystkie informacje o żądaniu
+// Debug - zapisz podstawowe informacje o żądaniu
 $debug_info = [
     'time' => date('Y-m-d H:i:s'),
     'server' => $_SERVER,
-    'headers' => getallheaders(),
-    'raw_post' => file_get_contents('php://input')
+    'post_data' => file_get_contents('php://input')
 ];
 file_put_contents('debug.txt', print_r($debug_info, true) . "\n---\n", FILE_APPEND);
 
@@ -22,21 +21,12 @@ if (!$signature) {
     die('Brak podpisu.');
 }
 
-// Debug - zapisz otrzymany podpis
-file_put_contents('signature_debug.txt', $signature . "\n", FILE_APPEND);
-
 // Pobierz zawartość żądania
 $payload = file_get_contents('php://input');
-
-// Debug - zapisz payload
-file_put_contents('payload_debug.txt', $payload . "\n", FILE_APPEND);
 
 // Oblicz hash używając sekretu
 list($algo, $hash) = explode('=', $signature, 2);
 $calculated_hash = hash_hmac($algo, $payload, $secret);
-
-// Debug - zapisz obliczony hash
-file_put_contents('signature_debug.txt', "Calculated: $algo=$calculated_hash\n", FILE_APPEND);
 
 // Zweryfikuj, czy podpis się zgadza
 if (!hash_equals($hash, $calculated_hash)) {
